@@ -1,0 +1,7 @@
+/* Extra styles for Parabolic Arts. Loaded after assets/site.css, so anything here wins. */
+
+/* About page: on the old Squarespace site the first two paragraphs in the left column overlapped.
+   Start the first one higher so the second sits below it. */
+@media (min-width: 768px) {
+  .fe-block-yui_3_17_2_1_1769703315592_11832 { grid-area: 1/5/4/8 !important; }
+}
