@@ -438,3 +438,100 @@ body.drawer-open .drawer { transform: none; }
   .product { grid-template-columns: 1fr; }
   .shop-wrap { padding-left: var(--sqs-mobile-site-gutter); padding-right: var(--sqs-mobile-site-gutter); }
 }
+
+/* ---------- case study template (cs-*) ----------
+   Same proportions as the Squarespace case studies: a 24-column grid inside the site gutters,
+   grey/white alternating sections, narrow text column beside a large image. */
+
+.cs { position: relative; }
+.cs-grid {
+  display: grid;
+  grid-template-columns: repeat(24, minmax(0, 1fr));
+  align-items: center;
+  width: 100%;
+  max-width: var(--sqs-site-max-width);
+  margin: 0 auto;
+  padding: 0 var(--sqs-site-gutter);
+}
+.cs-grey { background: var(--light); }
+.cs-white { background: var(--white); }
+
+.cs-h {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: clamp(17.08px, 16.9px + 0.06vw, 17.73px);
+  letter-spacing: 0.18em;
+  line-height: 1.99;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cs-title { display: flex; align-items: center; min-height: 14vh; padding: 20px 0; background: var(--white); }
+.cs-title h1 { grid-column: 1 / 13; }
+.cs-tagline { grid-column: 13 / 25; text-align: right; }
+
+.cs-intro, .cs-cta { display: flex; align-items: center; min-height: 42vh; padding: 4.2vw 0; }
+.cs-intro-text { grid-column: 9 / 17; text-align: center; }
+.cs-intro-text p { margin: 0 0 1rem; line-height: 1.8; }
+.cs-intro-text p:last-child { margin-bottom: 0; }
+.cs-cta .cs-intro-text { text-align: left; }
+.cs-cta-btn { grid-column: 1 / -1; display: flex; justify-content: center; margin-top: 2.2rem; }
+
+.cs-split { display: flex; align-items: center; min-height: 65vh; padding: 6.5vw 0; }
+.cs-text p { font-size: clamp(14.2px, calc(15.16px - 0.0619vw), 14.95px); line-height: 1.8; margin: 0 0 1.6rem; }
+.cs-text p:last-child { margin-bottom: 0; }
+.cs-media { display: block; }
+.cs-media img { width: 100%; height: auto; }
+.cs-text-image .cs-text { grid-column: 5 / 8; grid-row: 1; }
+.cs-text-image .cs-media { grid-column: 10 / 21; grid-row: 1; }
+.cs-image-text .cs-media { grid-column: 5 / 16; grid-row: 1; }
+.cs-image-text .cs-text { grid-column: 18 / 21; grid-row: 1; }
+
+.cs-full { background: var(--white); padding: 0; }
+.cs-full img { width: 100%; height: min(90vh, 56.25vw); object-fit: cover; }
+
+.cs-strip { padding: 6.5vw 0; }
+.cs-strip-imgs { grid-column: 5 / 21; display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: 1.2vw; }
+.cs-strip-item { display: block; aspect-ratio: var(--ratio, 3 / 4); overflow: hidden; cursor: zoom-in; }
+.cs-strip-label { grid-column: 5 / 21; margin-bottom: 1.6rem; }
+.cs-strip-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.cs-strip-item:hover img { transform: scale(1.03); }
+
+.cs-related .cs-text .cs-label { font-size: 12px; text-transform: uppercase; margin-bottom: 1.4rem; }
+.cs-related .cs-text h2 { margin-bottom: 1.6rem; }
+.cs-related .cs-text p { margin-bottom: 2rem; }
+.cs-related .cs-text .btn { padding: 0.6rem 1.6rem; min-height: 59px; }
+
+@media (max-width: 767px) {
+  .cs-grid { display: block; padding: 0 var(--sqs-mobile-site-gutter); }
+  .cs-title { min-height: 14vh; }
+  .cs-tagline { text-align: left; margin-top: 0.4rem; font-size: 13px; }
+  .cs-intro, .cs-cta { min-height: 0; padding: 14vw 0; }
+  .cs-intro-text { text-align: left; }
+  .cs-split { min-height: 0; padding: 14vw 0; }
+  .cs-split .cs-text { margin-bottom: 9vw; }
+  .cs-split .cs-text p { font-size: 15px; }
+  .cs-image-text .cs-grid { display: flex; flex-direction: column-reverse; }
+  .cs-image-text .cs-text { margin-bottom: 0; margin-top: 9vw; }
+  .cs-full img { height: 60vh; }
+  .cs-strip { padding: 14vw 0; }
+  .cs-strip-imgs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3vw; }
+  .cs-strip-label { margin-bottom: 1rem; }
+}
+
+/* ---------- lightbox ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex; align-items: center; justify-content: center;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: 92vw; max-height: 88vh; width: auto; height: auto; }
+.lightbox button {
+  position: absolute; border: 0; background: none; color: #fff; cursor: pointer;
+  font-size: 34px; line-height: 1; padding: 14px 18px; opacity: 0.85;
+}
+.lightbox button:hover { opacity: 1; }
+.lightbox .lb-close { top: 8px; right: 8px; }
+.lightbox .lb-prev { left: 4px; top: 50%; transform: translateY(-50%); }
+.lightbox .lb-next { right: 4px; top: 50%; transform: translateY(-50%); }

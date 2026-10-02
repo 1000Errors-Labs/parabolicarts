@@ -33,6 +33,37 @@
     start();
   });
 
+  // ---------- lightbox for image strips ----------
+  const lbLinks = [...document.querySelectorAll("[data-lightbox]")];
+  if (lbLinks.length) {
+    const box = document.createElement("div");
+    box.className = "lightbox";
+    box.hidden = true;
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-label", "Image viewer");
+    box.innerHTML = `<img alt=""><button class="lb-close" aria-label="Close">×</button><button class="lb-prev" aria-label="Previous">‹</button><button class="lb-next" aria-label="Next">›</button>`;
+    document.body.appendChild(box);
+    const img = box.querySelector("img");
+    let at = 0;
+    const show = i => {
+      at = (i + lbLinks.length) % lbLinks.length;
+      img.src = lbLinks[at].href;
+      img.alt = lbLinks[at].querySelector("img")?.alt || "";
+      box.hidden = false;
+    };
+    lbLinks.forEach((a, i) => a.addEventListener("click", e => { e.preventDefault(); show(i); }));
+    box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
+    box.querySelector(".lb-prev").addEventListener("click", () => show(at - 1));
+    box.querySelector(".lb-next").addEventListener("click", () => show(at + 1));
+    box.addEventListener("click", e => { if (e.target === box) box.hidden = true; });
+    document.addEventListener("keydown", e => {
+      if (box.hidden) return;
+      if (e.key === "Escape") box.hidden = true;
+      if (e.key === "ArrowLeft") show(at - 1);
+      if (e.key === "ArrowRight") show(at + 1);
+    });
+  }
+
   // ---------- forms (contact + newsletter) ----------
   // GitHub Pages can't receive form posts, so submissions go to FormSubmit, which emails them
   // to SITE.contactEmail. The very first submission sends an activation email to that address.
