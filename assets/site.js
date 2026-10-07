@@ -45,20 +45,27 @@
     document.body.appendChild(box);
     const img = box.querySelector("img");
     let at = 0;
+    // Stop the page scrolling behind the viewer (padding fills the gap the hidden scrollbar leaves).
+    const page = document.documentElement;
     const show = i => {
       at = (i + lbLinks.length) % lbLinks.length;
       img.src = lbLinks[at].href;
       img.alt = lbLinks[at].querySelector("img")?.alt || "";
+      if (box.hidden) {
+        page.style.paddingRight = `${window.innerWidth - page.clientWidth}px`;
+        page.style.overflow = "hidden";
+      }
       box.hidden = false;
     };
+    const hide = () => { box.hidden = true; page.style.overflow = page.style.paddingRight = ""; };
     lbLinks.forEach((a, i) => a.addEventListener("click", e => { e.preventDefault(); show(i); }));
-    box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
+    box.querySelector(".lb-close").addEventListener("click", hide);
     box.querySelector(".lb-prev").addEventListener("click", () => show(at - 1));
     box.querySelector(".lb-next").addEventListener("click", () => show(at + 1));
-    box.addEventListener("click", e => { if (e.target === box) box.hidden = true; });
+    box.addEventListener("click", e => { if (e.target === box) hide(); });
     document.addEventListener("keydown", e => {
       if (box.hidden) return;
-      if (e.key === "Escape") box.hidden = true;
+      if (e.key === "Escape") hide();
       if (e.key === "ArrowLeft") show(at - 1);
       if (e.key === "ArrowRight") show(at + 1);
     });
